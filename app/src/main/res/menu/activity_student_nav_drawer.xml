@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/studentarea"
+            android:icon="@drawable/subjects"
+            android:title="Subjects" />
+        <item
+            android:id="@+id/About"
+            android:icon="@drawable/info"
+            android:title="About" />
+
+
+    </group>
+
+    <item android:title="Information">
+        <menu>
+            <item
+                android:id="@+id/logout"
+                android:icon="@drawable/logout"
+                android:title="Logout" />
+        </menu>
+    </item>
+
+</menu>
