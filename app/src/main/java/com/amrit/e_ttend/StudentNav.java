@@ -179,7 +179,7 @@ public class StudentNav extends AppCompatActivity
             return true;
         }
 
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);sfsdfsd
     }*/
     private void displayselectedscreen(int id)
     {
