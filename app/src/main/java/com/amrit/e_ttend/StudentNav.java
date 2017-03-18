@@ -180,7 +180,9 @@ public class StudentNav extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);sfsdfsd
+
     }*/
+   static long temp;
     private void displayselectedscreen(int id)
     {
         Fragment fragment=null;
