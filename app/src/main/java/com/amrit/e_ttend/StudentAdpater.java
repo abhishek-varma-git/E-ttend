@@ -48,9 +48,7 @@ public class StudentAdpater extends RecyclerView.Adapter<StudentAdpater.ViewHold
     Context ctx;
     static String ssub_name;
     static String sub_name;
-    static String usn = StudentNav.susn;
     static long diff;
-    static String temp;
 
 
     public StudentAdpater(ArrayList<StudentListItem> arrayList, Context ctx) {

@@ -88,12 +88,12 @@ public class StudentNav extends AppCompatActivity
         recyclerView.setHasFixedSize(true);
         name=(TextView)header.findViewById(R.id.Name);
         email=(TextView)header.findViewById(R.id.Email);
-        name.setText(SharedPrefManager.getInstance(this).getname());
-        email.setText(SharedPrefManager.getInstance(this).getemail());
+        name.setText(SharedPrefManager.getInstance(this).getstudentname());
+        email.setText(SharedPrefManager.getInstance(this).getstudentemail());
       /*  Bundle bundle;
         bundle = getIntent().getExtras();
         final String usn = bundle.getString("usn");*/
-        susn=SharedPrefManager.getInstance(this).getusn();
+        susn=SharedPrefManager.getInstance(this).getstudentusn();
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Fetching Subject...");
         progressDialog.show();

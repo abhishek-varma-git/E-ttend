@@ -89,19 +89,34 @@ public class SharedPrefManager {
         editor.apply();
         return true;
     }
-    public String getusn()
+    public String getstudentusn()
     {
         SharedPreferences sharedPreferences=mctx.getSharedPreferences(shared_pref_name,Context.MODE_PRIVATE);
         return sharedPreferences.getString(keyusn,null);
     }
-    public String getname()
+    public String getstudentname()
     {
         SharedPreferences sharedPreferences=mctx.getSharedPreferences(shared_pref_name,Context.MODE_PRIVATE);
         return sharedPreferences.getString(keyname,null);
     }
-    public String getemail()
+    public String getstudentemail()
     {
         SharedPreferences sharedPreferences=mctx.getSharedPreferences(shared_pref_name,Context.MODE_PRIVATE);
         return sharedPreferences.getString(keyemail,null);
+    }
+    public String getteacherempid()
+    {
+        SharedPreferences sharedPreferences=mctx.getSharedPreferences(shared_pref_name,Context.MODE_PRIVATE);
+        return sharedPreferences.getString(keyempid,null);
+    }
+    public String getteachernamae()
+    {
+        SharedPreferences sharedPreferences=mctx.getSharedPreferences(shared_pref_name,Context.MODE_PRIVATE);
+        return sharedPreferences.getString(keytname,null);
+    }
+    public String getteacheremail()
+    {
+        SharedPreferences sharedPreferences=mctx.getSharedPreferences(shared_pref_name,Context.MODE_PRIVATE);
+        return sharedPreferences.getString(keytemail,null);
     }
 }

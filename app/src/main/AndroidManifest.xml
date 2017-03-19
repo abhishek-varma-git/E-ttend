@@ -39,7 +39,8 @@
         <activity
             android:name=".TeacherArea"
             android:label="@string/title_activity_teacher_area"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".TeacherListItems"></activity>
     </application>
 
 </manifest>
