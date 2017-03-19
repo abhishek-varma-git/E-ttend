@@ -11,5 +11,6 @@ import java.util.TimeZone;
 
 public class Contents {
     public static String usn;
+    public static String empid;
     public static long[] timearray;
 }

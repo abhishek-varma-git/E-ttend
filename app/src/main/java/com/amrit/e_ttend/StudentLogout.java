@@ -19,7 +19,7 @@ public class StudentLogout extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        if(SharedPrefManager.getInstance(this.getActivity()).logout())
+        if(SharedPrefManager.getInstance(this.getActivity()).studentlogout())
         {
             getActivity().finish();
             startActivity(new Intent(this.getActivity(),StudentLogin.class));

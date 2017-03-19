@@ -77,7 +77,7 @@ public class StudentNav extends AppCompatActivity
         View header=navigationView.getHeaderView(0);
         //View view=navigationView.inflateHeaderView(R.layout.nav_header_student_nav);
 
-        if(!SharedPrefManager.getInstance(this).isLoggedIn())
+        if(!SharedPrefManager.getInstance(this).isStudentLoggedIn())
         {
             finish();
             startActivity(new Intent(this,StudentLogin.class));
@@ -111,7 +111,6 @@ public class StudentNav extends AppCompatActivity
                                 String sessions = jsonobject.getString("sessions");
                                 String attended = jsonobject.getString("attended");
                                 Contents.timearray[count]=jsonobject.getLong("time");
-                                //Toast.makeText(getApplicationContext(),Contents.timearray[count],Toast.LENGTH_SHORT).show();
                                 float total = Float.parseFloat(sessions);
                                 float total_attended = Float.parseFloat(attended);
                                 float per = total_attended / total * 100;
@@ -119,7 +118,6 @@ public class StudentNav extends AppCompatActivity
                                 float twoDigitsF = Float.valueOf(decimalFormat.format(per));
                                 String percentage = Float.toString(twoDigitsF);
                                 StudentListItem item = new StudentListItem(
-                                        //jsonobject.getString("time"),
                                         jsonobject.getString("sub_name"),
                                         jsonobject.getString("sessions"),
                                         jsonobject.getString("attended"),
@@ -138,7 +136,8 @@ public class StudentNav extends AppCompatActivity
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
-                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Error! Check for your Internet Connection" +
+                        "        Unable to fetch data from Server", Toast.LENGTH_LONG).show();
                 error.printStackTrace();
             }
         }){

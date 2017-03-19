@@ -2,6 +2,7 @@ package com.amrit.e_ttend;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.widget.Toast;
 
 /**
  * Created by Amrit on 3/8/2017.
@@ -12,9 +13,12 @@ public class SharedPrefManager {
 
     private static Context mctx;
     private static final String shared_pref_name="rtretert";
-    private static String keyusn=null;
-    private static String keyname="sdfgsdgs";
-    private static String keyemail="dfgdfg";
+    private static String keyusn="fgfgsg";
+    private static String keyname="fdsfdfdf";
+    private static String keyemail="dsfsdfdfsdf";
+    private static String keyempid="sdfdfsfsdf";
+    private static String keytname="dfsdfsf";
+    private static String keytemail="Sfsdfsffdsf";
     private SharedPrefManager(Context context)
     {
         mctx=context;
@@ -29,7 +33,7 @@ public class SharedPrefManager {
         }
         return mInstance;
     }
-    public boolean userLogin(String usn,String name,String email)
+    public boolean StudentLogin(String usn,String name,String email)
     {
 
         SharedPreferences sharedPreferences=mctx.getSharedPreferences(shared_pref_name,Context.MODE_PRIVATE);
@@ -40,7 +44,18 @@ public class SharedPrefManager {
         editor.apply();
         return true;
     }
-    public boolean isLoggedIn()
+    public boolean TeacherLogin(String empid,String name,String email)
+    {
+
+        SharedPreferences sharedPreferences=mctx.getSharedPreferences(shared_pref_name,Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.putString(keyempid,empid);
+        editor.putString(keytname,name);
+        editor.putString(keytemail,email);
+        editor.apply();
+        return true;
+    }
+    public boolean isStudentLoggedIn()
     {
         SharedPreferences sharedPreferences=mctx.getSharedPreferences(shared_pref_name,Context.MODE_PRIVATE);
         if(sharedPreferences.getString(keyusn,null)!=null)
@@ -49,11 +64,28 @@ public class SharedPrefManager {
         }
         return false;
     }
-    public  boolean logout()
+    public boolean isTeacherLoggedIn()
+    {
+        SharedPreferences sharedPreferences=mctx.getSharedPreferences(shared_pref_name,Context.MODE_PRIVATE);
+        if(sharedPreferences.getString(keyempid,null)!=null)
+        {
+            return true;
+        }
+        return false;
+    }
+    public  boolean studentlogout()
     {
         SharedPreferences sharedPreferences=mctx.getSharedPreferences(shared_pref_name,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferences.edit();
-        editor.clear();
+        editor.remove(keyusn);
+        editor.apply();
+        return true;
+    }
+    public  boolean Teacherlogout()
+    {
+        SharedPreferences sharedPreferences=mctx.getSharedPreferences(shared_pref_name,Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.remove(keyempid);
         editor.apply();
         return true;
     }

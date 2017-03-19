@@ -12,10 +12,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //startActivity(new Intent(this,StudentNav.class));
-        if(SharedPrefManager.getInstance(this).isLoggedIn())
+        if(SharedPrefManager.getInstance(this).isStudentLoggedIn())
         {
             startActivity(new Intent(this,StudentNav.class));
+            finish();
+            return;
+        }
+        if(SharedPrefManager.getInstance(this).isTeacherLoggedIn())
+        {
+            startActivity(new Intent(this,TeacherArea.class));
             finish();
             return;
         }
@@ -29,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
         Button teacherbutton = (Button) findViewById(R.id.teacherbutton);
         teacherbutton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-// Click event trigger here
+                startActivity(new Intent(MainActivity.this,TeacherLogin.class));
+                finish();
             }
         });
     }

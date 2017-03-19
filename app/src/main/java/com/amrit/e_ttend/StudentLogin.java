@@ -40,10 +40,10 @@ public class StudentLogin extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_login);
-        if(SharedPrefManager.getInstance(this).isLoggedIn())
+        if(SharedPrefManager.getInstance(this).isStudentLoggedIn())
         {
             finish();
-            Intent i=new Intent(this,StudentArea.class);
+            Intent i=new Intent(this,StudentNav.class);
             startActivity(i);
             return;
         }
@@ -100,13 +100,14 @@ public class StudentLogin extends AppCompatActivity implements View.OnClickListe
                                     displayAlert(jsonObject.getString("message"));
                                 } else {
                                     SharedPrefManager.getInstance(getApplicationContext())
-                                            .userLogin(jsonObject.getString("usn"),
+                                            .StudentLogin(jsonObject.getString("usn"),
                                                     jsonObject.getString("name"),
                                                     jsonObject.getString("email"));
 
                                     Contents.usn=jsonObject.getString("usn");
                                     Intent intent = new Intent(StudentLogin.this, StudentNav.class);
-                                    startActivity(intent);/* Bundle bundle = new Bundle();
+                                    startActivity(intent);
+                                    /* Bundle bundle = new Bundle();
                                     bundle.putString("usn", jsonObject.getString("usn"));
                                     intent.putExtras(bundle);*/
                                     finish();

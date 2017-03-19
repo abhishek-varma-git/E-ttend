@@ -11,6 +11,6 @@ public class temp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temp);
 
-        startActivity(new Intent(this,StudentArea.class));
+       // startActivity(new Intent(this,StudentArea.class));
     }
 }
