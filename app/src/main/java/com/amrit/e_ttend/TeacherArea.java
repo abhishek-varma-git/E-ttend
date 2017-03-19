@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -81,6 +83,33 @@ public class TeacherArea extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
+    private void displayselectedscreen(int id)
+    {
+        Fragment fragment=null;
+        switch(id)
+        {
+            /*case R.id.About:
+                finish();
+                startActivity(new Intent(this,TeacherArea.class));
+                break;*/
+            case R.id.logout:
+                fragment=new TeacherLogout();
+                break;
+            case R.id.teacherarea:
+                finish();
+                startActivity(new Intent(this,TeacherArea.class));
+                //fragment=new StudentSubjects();
+                break;
+        }
+        if (fragment!=null)
+        {
+            FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.contentmain,fragment);
+            fragmentTransaction.commit();
+        }
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -88,22 +117,7 @@ public class TeacherArea extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        displayselectedscreen(id);
         return true;
     }
 }

@@ -185,16 +185,15 @@ public class StudentNav extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     made some changes
     }*/
-   static long temp;
     private void displayselectedscreen(int id)
     {
         Fragment fragment=null;
         switch(id)
         {
-            case R.id.About:
+           /* case R.id.About:
                 finish();
                 startActivity(new Intent(this,TeacherArea.class));
-                break;
+                break;*/
             case R.id.logout:
                 fragment=new StudentLogout();
                 break;
