@@ -102,6 +102,7 @@ public class StudentNav extends AppCompatActivity
                     @Override
                     public void onResponse(String response) {
                         progressDialog.dismiss();
+                        Contents.timearray=new long[response.length()];
                         for (int count = 0; count < response.length(); count++) {
                             try {
 
@@ -109,6 +110,8 @@ public class StudentNav extends AppCompatActivity
                                 JSONObject jsonobject = JsonArray.getJSONObject(count);
                                 String sessions = jsonobject.getString("sessions");
                                 String attended = jsonobject.getString("attended");
+                                Contents.timearray[count]=jsonobject.getLong("time");
+                                //Toast.makeText(getApplicationContext(),Contents.timearray[count],Toast.LENGTH_SHORT).show();
                                 float total = Float.parseFloat(sessions);
                                 float total_attended = Float.parseFloat(attended);
                                 float per = total_attended / total * 100;
@@ -116,6 +119,7 @@ public class StudentNav extends AppCompatActivity
                                 float twoDigitsF = Float.valueOf(decimalFormat.format(per));
                                 String percentage = Float.toString(twoDigitsF);
                                 StudentListItem item = new StudentListItem(
+                                        //jsonobject.getString("time"),
                                         jsonobject.getString("sub_name"),
                                         jsonobject.getString("sessions"),
                                         jsonobject.getString("attended"),

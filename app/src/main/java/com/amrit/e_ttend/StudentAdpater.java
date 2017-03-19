@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -48,12 +49,8 @@ public class StudentAdpater extends RecyclerView.Adapter<StudentAdpater.ViewHold
     static String ssub_name;
     static String sub_name;
     static String usn = StudentNav.susn;
-    static long time;
     static long diff;
-    static long databasetime;
-    static ProgressDialog progressDialog;
-    static int flag=0,flag1=0;
-
+    static String temp;
 
 
     public StudentAdpater(ArrayList<StudentListItem> arrayList, Context ctx) {
@@ -87,7 +84,6 @@ public class StudentAdpater extends RecyclerView.Adapter<StudentAdpater.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        String time_url = "http://irretrievable-meter.000webhostapp.com/timeretrieve.php";
         public TextView head;
         public TextView desc1;
         public TextView desc2;
@@ -114,60 +110,18 @@ public class StudentAdpater extends RecyclerView.Adapter<StudentAdpater.ViewHold
             final StudentListItem studentListItem = this.studentListItems.get(position);
 
             sub_name = studentListItem.getHead();
-            progressDialog = new ProgressDialog(ctx);
-            progressDialog.setMessage("Loading...");
-            progressDialog.show();
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, time_url,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            progressDialog.dismiss();
-
-                            try {
-                                JSONArray JsonArray = new JSONArray(response);
-                                JSONObject jsonObject = JsonArray.getJSONObject(0);
-                                databasetime=jsonObject.getLong("time");
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-
-                    progressDialog.dismiss();
-                    flag=1;
-                    Toast.makeText(ctx, "Error! Check for your Internet Connection" + "        Unable to fetch data from Server", Toast.LENGTH_SHORT).show();
-                    error.printStackTrace();
-                }
-            }) {
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put("usn", usn);
-                    params.put("sub_name", sub_name);
-                    return params;
-                }
-            };
-            MySingleton.getInstance(ctx).addToRequestque(stringRequest);
-
             Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+5:30"));
             long localtime = cal.getTimeInMillis();
-            //Toast.makeText(ctx,time,Toast.LENGTH_LONG).show();
-
+            long databasetime=Contents.timearray[position];
             diff = localtime - databasetime;
-            if(databasetime==0)
-            {
-                progressDialog.dismiss();
-                Toast.makeText(ctx,"Click again to confirm",Toast.LENGTH_SHORT).show();
-            }
+
             // v.setEnabled(false);
             // v.setClickable(false);
 
-           else if (diff < 30000 && flag==0 )
+           if (diff < 120000)
             {
-                    progressDialog.dismiss();
-                    Toast.makeText(ctx, "Wait for 2 minute to mark your attendance   " , Toast.LENGTH_SHORT).show();
+                Snackbar.make(v, "You recently marked your attendance!\n Wait for 2 minutes to mark again", Snackbar.LENGTH_LONG)
+                        .setAction("Action",null).show();
             }
             else
             {
@@ -175,9 +129,6 @@ public class StudentAdpater extends RecyclerView.Adapter<StudentAdpater.ViewHold
                 DateFormat date = new SimpleDateFormat("dd-MM-yyy HH:mm:ss z");
                 date.setTimeZone(TimeZone.getTimeZone("GMT+5:30"));
                 String localTime = date.format(currentLocalTime);*/
-                flag=0;
-                Toast.makeText(ctx, ""+databasetime+"  diff  "+diff , Toast.LENGTH_SHORT).show();
-                progressDialog.dismiss();
                 builder = new AlertDialog.Builder(this.ctx);
                 builder.setTitle("Alert!");
                 builder.setMessage("Are you Sure you want to continue ?\n\nAs you won't be able to mark your attendace for this subject again for one hour");
@@ -200,7 +151,6 @@ public class StudentAdpater extends RecyclerView.Adapter<StudentAdpater.ViewHold
                 });
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
-                databasetime=0;
             }
         }
     }

@@ -126,7 +126,6 @@ public class QRscanner extends AppCompatActivity {
                     }
                 };
                 MySingleton.getInstance(QRscanner.this).addToRequestque(stringRequest);
-                Toast.makeText(this,temp1,Toast.LENGTH_SHORT).show();
             }
         }
         else {

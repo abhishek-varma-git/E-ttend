@@ -1,5 +1,7 @@
 package com.amrit.e_ttend;
 
+import android.util.Log;
+
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -9,4 +11,5 @@ import java.util.TimeZone;
 
 public class Contents {
     public static String usn;
+    public static long[] timearray;
 }
