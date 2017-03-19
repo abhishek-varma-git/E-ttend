@@ -179,8 +179,8 @@ public class StudentNav extends AppCompatActivity
             return true;zfdfd
         }
 
-        return super.onOptionsItemSelected(item);sfsdfsd
-
+        return super.onOptionsItemSelected(item);
+    asfaf
     }*/
    static long temp;
     private void displayselectedscreen(int id)
