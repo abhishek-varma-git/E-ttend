@@ -176,7 +176,7 @@ public class StudentNav extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            return true;zfdfd
         }
 
         return super.onOptionsItemSelected(item);sfsdfsd
