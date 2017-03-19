@@ -1,11 +1,14 @@
 package com.amrit.e_ttend;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,9 +18,33 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TeacherArea extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    RecyclerView recyclerView;
+    RecyclerView.Adapter adapter;
+    RecyclerView.LayoutManager layout;
+    ArrayList<StudentListItem> arrayList = new ArrayList<>();
+    String url_data = "http://irretrievable-meter.000webhostapp.com/retrivestudent.php";
+    TextView name,email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +70,77 @@ public class TeacherArea extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View header=navigationView.getHeaderView(0);
+        recyclerView = (RecyclerView) findViewById(R.id.recylerview);
+        layout = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layout);
+        recyclerView.setHasFixedSize(true);
+        name=(TextView)header.findViewById(R.id.Name);
+        email=(TextView)header.findViewById(R.id.Email);
+        name.setText(SharedPrefManager.getInstance(this).getteachername());
+        email.setText(SharedPrefManager.getInstance(this).getteacheremail());
 
         if(!SharedPrefManager.getInstance(this).isTeacherLoggedIn())
         {
             finish();
             startActivity(new Intent(this,TeacherLogin.class));
         }
+
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Fetching Subject...");
+        progressDialog.show();
+        StringRequest stringRequest=new StringRequest(Request.Method.POST,url_data,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressDialog.dismiss();
+                        Contents.timearray=new long[response.length()];
+                        for (int count = 0; count < response.length(); count++) {
+                            try {
+
+                                JSONArray JsonArray = new JSONArray(response);
+                                JSONObject jsonobject = JsonArray.getJSONObject(count);
+                                String sessions = jsonobject.getString("sessions");
+                                String attended = jsonobject.getString("attended");
+                                Contents.timearray[count]=jsonobject.getLong("time");
+                                float total = Float.parseFloat(sessions);
+                                float total_attended = Float.parseFloat(attended);
+                                float per = total_attended / total * 100;
+                                DecimalFormat decimalFormat = new DecimalFormat("#.#");
+                                float twoDigitsF = Float.valueOf(decimalFormat.format(per));
+                                String percentage = Float.toString(twoDigitsF);
+                                StudentListItem item = new StudentListItem(
+                                        jsonobject.getString("sub_name"),
+                                        jsonobject.getString("sessions"),
+                                        jsonobject.getString("attended"),
+                                        percentage + "%");
+                                arrayList.add(item);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                        adapter = new StudentAdpater(arrayList,TeacherArea.this);
+                        recyclerView.setAdapter(adapter);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Toast.makeText(getApplicationContext(), "Error! Check for your Internet Connection" +
+                        "        Unable to fetch data from Server", Toast.LENGTH_LONG).show();
+                error.printStackTrace();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params=new HashMap<String, String>();
+                //params.put("usn",susn);
+                return params;
+            }
+        };
+        MySingleton.getInstance(this).addToRequestque(stringRequest);
     }
 
     @Override

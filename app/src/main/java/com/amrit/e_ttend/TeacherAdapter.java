@@ -103,7 +103,7 @@ public class TeacherAdapter extends RecyclerView.Adapter<TeacherAdapter.ViewHold
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         ((Activity) ctx).finish();
-                        ctx.startActivity(new Intent(ctx, StudentNav.class));
+                        ctx.startActivity(new Intent(ctx, StudentArea.class));
                     }
                 });
                 AlertDialog alertDialog = builder.create();

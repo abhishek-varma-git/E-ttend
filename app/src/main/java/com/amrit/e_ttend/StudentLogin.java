@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -43,7 +42,7 @@ public class StudentLogin extends AppCompatActivity implements View.OnClickListe
         if(SharedPrefManager.getInstance(this).isStudentLoggedIn())
         {
             finish();
-            Intent i=new Intent(this,StudentNav.class);
+            Intent i=new Intent(this,StudentArea.class);
             startActivity(i);
             return;
         }
@@ -105,7 +104,7 @@ public class StudentLogin extends AppCompatActivity implements View.OnClickListe
                                                     jsonObject.getString("email"));
 
                                     Contents.usn=jsonObject.getString("usn");
-                                    Intent intent = new Intent(StudentLogin.this, StudentNav.class);
+                                    Intent intent = new Intent(StudentLogin.this, StudentArea.class);
                                     startActivity(intent);
                                     /* Bundle bundle = new Bundle();
                                     bundle.putString("usn", jsonObject.getString("usn"));

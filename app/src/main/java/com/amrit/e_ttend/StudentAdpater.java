@@ -1,12 +1,9 @@
 package com.amrit.e_ttend;
 
 import android.app.Activity;
-import android.app.LauncherActivity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -14,27 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.os.Handler;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.TimeZone;
 
 /**
@@ -144,7 +123,7 @@ public class StudentAdpater extends RecyclerView.Adapter<StudentAdpater.ViewHold
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         ((Activity)ctx).finish();
-                        ctx.startActivity(new Intent(ctx,StudentNav.class));
+                        ctx.startActivity(new Intent(ctx,StudentArea.class));
                     }
                 });
                 AlertDialog alertDialog = builder.create();

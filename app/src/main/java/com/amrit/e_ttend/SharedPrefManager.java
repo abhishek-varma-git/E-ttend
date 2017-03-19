@@ -109,7 +109,7 @@ public class SharedPrefManager {
         SharedPreferences sharedPreferences=mctx.getSharedPreferences(shared_pref_name,Context.MODE_PRIVATE);
         return sharedPreferences.getString(keyempid,null);
     }
-    public String getteachernamae()
+    public String getteachername()
     {
         SharedPreferences sharedPreferences=mctx.getSharedPreferences(shared_pref_name,Context.MODE_PRIVATE);
         return sharedPreferences.getString(keytname,null);

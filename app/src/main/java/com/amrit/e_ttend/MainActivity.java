@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         if(SharedPrefManager.getInstance(this).isStudentLoggedIn())
         {
-            startActivity(new Intent(this,StudentNav.class));
+            startActivity(new Intent(this,StudentArea.class));
             finish();
             return;
         }

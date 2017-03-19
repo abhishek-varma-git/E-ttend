@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -26,9 +25,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
-
-import static android.R.attr.button;
-import static android.R.attr.manageSpaceActivity;
 
 public class QRscanner extends AppCompatActivity {
 
@@ -54,7 +50,7 @@ public class QRscanner extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(this,StudentNav.class));
+        startActivity(new Intent(this,StudentArea.class));
     }
 
     @Override
@@ -69,7 +65,7 @@ public class QRscanner extends AppCompatActivity {
             }
             else
             {
-                final String usn=StudentNav.susn;
+                final String usn= StudentArea.susn;
                 final String ssub_name=StudentAdpater.ssub_name;
                 final String qrcode=result.getContents();
                 Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+5:30"));
@@ -139,7 +135,7 @@ public class QRscanner extends AppCompatActivity {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-               Intent intent=new Intent(getApplicationContext(),StudentNav.class);
+               Intent intent=new Intent(getApplicationContext(),StudentArea.class);
                startActivity(intent);
                 finish();
             }

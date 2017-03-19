@@ -1,13 +1,9 @@
 package com.amrit.e_ttend;
 
 //import android.app.Fragment;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,9 +15,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +34,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StudentNav extends AppCompatActivity
+public class StudentArea extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
@@ -129,7 +123,7 @@ public class StudentNav extends AppCompatActivity
                             }
 
                         }
-                        adapter = new StudentAdpater(arrayList,StudentNav.this);
+                        adapter = new StudentAdpater(arrayList,StudentArea.this);
                         recyclerView.setAdapter(adapter);
                     }
                 }, new Response.ErrorListener() {
@@ -199,7 +193,7 @@ public class StudentNav extends AppCompatActivity
                 break;
             case R.id.studentarea:
                 finish();
-                startActivity(new Intent(this,StudentNav.class));
+                startActivity(new Intent(this,StudentArea.class));
 
                 //fragment=new StudentSubjects();
                 break;
