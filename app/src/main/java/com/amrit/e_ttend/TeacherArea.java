@@ -42,8 +42,8 @@ public class TeacherArea extends AppCompatActivity
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     RecyclerView.LayoutManager layout;
-    ArrayList<StudentListItem> arrayList = new ArrayList<>();
-    String url_data = "http://irretrievable-meter.000webhostapp.com/retrivestudent.php";
+    ArrayList<TeacherListItems> arrayList = new ArrayList<>();
+    String url_data = "http://irretrievable-meter.000webhostapp.com/teacherretrieve.php";
     TextView name,email;
 
     @Override
@@ -100,20 +100,12 @@ public class TeacherArea extends AppCompatActivity
 
                                 JSONArray JsonArray = new JSONArray(response);
                                 JSONObject jsonobject = JsonArray.getJSONObject(count);
-                                String sessions = jsonobject.getString("sessions");
-                                String attended = jsonobject.getString("attended");
-                                Contents.timearray[count]=jsonobject.getLong("time");
-                                float total = Float.parseFloat(sessions);
-                                float total_attended = Float.parseFloat(attended);
-                                float per = total_attended / total * 100;
-                                DecimalFormat decimalFormat = new DecimalFormat("#.#");
-                                float twoDigitsF = Float.valueOf(decimalFormat.format(per));
-                                String percentage = Float.toString(twoDigitsF);
-                                StudentListItem item = new StudentListItem(
+                                TeacherListItems item = new TeacherListItems(
                                         jsonobject.getString("sub_name"),
-                                        jsonobject.getString("sessions"),
-                                        jsonobject.getString("attended"),
-                                        percentage + "%");
+                                        jsonobject.getString("class_id"),
+                                        jsonobject.getString("sessions")
+                                        );
+
                                 arrayList.add(item);
 
                             } catch (JSONException e) {
@@ -121,7 +113,7 @@ public class TeacherArea extends AppCompatActivity
                             }
 
                         }
-                        adapter = new StudentAdpater(arrayList,TeacherArea.this);
+                        adapter = new TeacherAdapter(arrayList,TeacherArea.this);
                         recyclerView.setAdapter(adapter);
                     }
                 }, new Response.ErrorListener() {
@@ -136,7 +128,7 @@ public class TeacherArea extends AppCompatActivity
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params=new HashMap<String, String>();
-                //params.put("usn",susn);
+                params.put("emp_id",Contents.empid);
                 return params;
             }
         };

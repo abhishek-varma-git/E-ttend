@@ -44,7 +44,6 @@ public class TeacherAdapter extends RecyclerView.Adapter<TeacherAdapter.ViewHold
         holder.head.setText(arrayList.get(position).getHead());
         holder.desc1.setText(arrayList.get(position).getDesc1());
         holder.desc2.setText(arrayList.get(position).getDesc2());
-        holder.desc3.setText(arrayList.get(position).getDesc3());
     }
 
     @Override
@@ -58,7 +57,6 @@ public class TeacherAdapter extends RecyclerView.Adapter<TeacherAdapter.ViewHold
         public TextView head;
         public TextView desc1;
         public TextView desc2;
-        public TextView desc3;
         ArrayList<TeacherListItems> teacherListItems = new ArrayList<>();
         Context ctx;
 
@@ -71,7 +69,6 @@ public class TeacherAdapter extends RecyclerView.Adapter<TeacherAdapter.ViewHold
             head = (TextView) itemView.findViewById(R.id.head);
             desc1 = (TextView) itemView.findViewById((R.id.desc1));
             desc2 = (TextView) itemView.findViewById((R.id.desc2));
-            desc3 = (TextView) itemView.findViewById((R.id.desc3));
         }
 
         @Override
@@ -88,7 +85,7 @@ public class TeacherAdapter extends RecyclerView.Adapter<TeacherAdapter.ViewHold
                 String localTime = date.format(currentLocalTime);*/
                 builder = new AlertDialog.Builder(this.ctx);
                 builder.setTitle("Alert!");
-                builder.setMessage("Are you Sure you want to continue ?\n\nAs you won't be able to mark your attendace for this subject again for one hour");
+                builder.setMessage("Are you Sure?\n\n Have you taken class for this subject");
                 builder.setPositiveButton("PROCEED", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
