@@ -7,15 +7,20 @@
             android:id="@+id/teacherarea"
             android:icon="@drawable/subjects"
             android:title="Subjects" />
+
         <item
-            android:id="@+id/About"
-            android:icon="@drawable/info"
-            android:title="About" />
+            android:id="@+id/QR_Generator"
+            android:title="QR Generator" />
+        <item
+        android:id="@+id/About"
+        android:icon="@drawable/info"
+        android:title="About" />
+
 
 
     </group>
 
-    <item android:title="Information">
+    <item android:title="Profile">
         <menu>
             <item
                 android:id="@+id/logout"

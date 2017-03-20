@@ -1,12 +1,8 @@
 package com.amrit.e_ttend;
 
-//import android.app.Fragment;
-import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -17,30 +13,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class StudentArea extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    RecyclerView recyclerView;
-    RecyclerView.Adapter adapter;
-    RecyclerView.LayoutManager layout;
-    ArrayList<StudentListItem> arrayList = new ArrayList<>();
-    String url_data = "http://irretrievable-meter.000webhostapp.com/retrivestudent.php";
     TextView name,email;
     public static String susn;
 
@@ -69,80 +46,13 @@ public class StudentArea extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View header=navigationView.getHeaderView(0);
-        //View view=navigationView.inflateHeaderView(R.layout.nav_header_student_nav);
+        displayselectedscreen(R.id.studentarea);
 
-        if(!SharedPrefManager.getInstance(this).isStudentLoggedIn())
-        {
-            finish();
-            startActivity(new Intent(this,StudentLogin.class));
-        }
-        recyclerView = (RecyclerView) findViewById(R.id.recylerview);
-        layout = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layout);
-        recyclerView.setHasFixedSize(true);
         name=(TextView)header.findViewById(R.id.Name);
         email=(TextView)header.findViewById(R.id.Email);
         name.setText(SharedPrefManager.getInstance(this).getstudentname());
         email.setText(SharedPrefManager.getInstance(this).getstudentemail());
-      /*  Bundle bundle;
-        bundle = getIntent().getExtras();
-        final String usn = bundle.getString("usn");*/
-        susn=SharedPrefManager.getInstance(this).getstudentusn();
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Fetching Subject...");
-        progressDialog.show();
-        StringRequest stringRequest=new StringRequest(Request.Method.POST,url_data,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        progressDialog.dismiss();
-                        Contents.timearray=new long[response.length()];
-                        for (int count = 0; count < response.length(); count++) {
-                            try {
 
-                                JSONArray JsonArray = new JSONArray(response);
-                                JSONObject jsonobject = JsonArray.getJSONObject(count);
-                                String sessions = jsonobject.getString("sessions");
-                                String attended = jsonobject.getString("attended");
-                                Contents.timearray[count]=jsonobject.getLong("time");
-                                float total = Float.parseFloat(sessions);
-                                float total_attended = Float.parseFloat(attended);
-                                float per = total_attended / total * 100;
-                                DecimalFormat decimalFormat = new DecimalFormat("#.#");
-                                float twoDigitsF = Float.valueOf(decimalFormat.format(per));
-                                String percentage = Float.toString(twoDigitsF);
-                                StudentListItem item = new StudentListItem(
-                                        jsonobject.getString("sub_name"),
-                                        jsonobject.getString("sessions"),
-                                        jsonobject.getString("attended"),
-                                        percentage + "%");
-                                arrayList.add(item);
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-                        }
-                        adapter = new StudentAdpater(arrayList,StudentArea.this);
-                        recyclerView.setAdapter(adapter);
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                progressDialog.dismiss();
-                Toast.makeText(getApplicationContext(), "Error! Check for your Internet Connection" +
-                        "        Unable to fetch data from Server", Toast.LENGTH_LONG).show();
-                error.printStackTrace();
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params=new HashMap<String, String>();
-                params.put("usn",susn);
-                return params;
-            }
-        };
-        MySingleton.getInstance(this).addToRequestque(stringRequest);
 
     }
 
@@ -192,16 +102,14 @@ public class StudentArea extends AppCompatActivity
                 fragment=new StudentLogout();
                 break;
             case R.id.studentarea:
-                finish();
-                startActivity(new Intent(this,StudentArea.class));
-
-                //fragment=new StudentSubjects();
+               fragment=new StudentSubjectsFrag();
                 break;
+
         }
         if (fragment!=null)
         {
             FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.contentmain,fragment);
+            fragmentTransaction.replace(R.id.content_student,fragment);
             fragmentTransaction.commit();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

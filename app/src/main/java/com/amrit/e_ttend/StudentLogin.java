@@ -50,7 +50,6 @@ public class StudentLogin extends AppCompatActivity implements View.OnClickListe
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
                 startActivity(new Intent(StudentLogin.this, StudentRegister.class));
             }
         });
@@ -59,7 +58,7 @@ public class StudentLogin extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 finish();
-                startActivity(new Intent(StudentLogin.this, MainActivity.class));
+                startActivity(new Intent(StudentLogin.this, TeacherLogin.class));
             }
         });
 

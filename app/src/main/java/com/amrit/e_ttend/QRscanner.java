@@ -135,8 +135,6 @@ public class QRscanner extends AppCompatActivity {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-               Intent intent=new Intent(getApplicationContext(),StudentArea.class);
-               startActivity(intent);
                 finish();
             }
         });

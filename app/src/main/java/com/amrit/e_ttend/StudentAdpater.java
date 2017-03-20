@@ -115,15 +115,14 @@ public class StudentAdpater extends RecyclerView.Adapter<StudentAdpater.ViewHold
                         Intent intent = new Intent(ctx, fingerprint.class);
                         ssub_name = studentListItem.getHead();
                         ctx.startActivity(intent);
-                        ((Activity)ctx).finish();
+                        //((Activity)ctx).finish();
 
                     }
                 });
                 builder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        ((Activity)ctx).finish();
-                        ctx.startActivity(new Intent(ctx,StudentArea.class));
+
                     }
                 });
                 AlertDialog alertDialog = builder.create();

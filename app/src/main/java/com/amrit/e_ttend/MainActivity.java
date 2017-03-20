@@ -24,11 +24,11 @@ public class MainActivity extends AppCompatActivity {
             finish();
             return;
         }
-       Button studentbutton = (Button) findViewById(R.id.studentbutton);
+        Button studentbutton = (Button) findViewById(R.id.studentbutton);
         studentbutton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    startActivity(new Intent(MainActivity.this,StudentLogin.class));
-                    finish();
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,StudentLogin.class));
+                finish();
             }
         });
         Button teacherbutton = (Button) findViewById(R.id.teacherbutton);

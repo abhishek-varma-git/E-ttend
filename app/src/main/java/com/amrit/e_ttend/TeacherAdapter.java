@@ -85,22 +85,21 @@ public class TeacherAdapter extends RecyclerView.Adapter<TeacherAdapter.ViewHold
                 String localTime = date.format(currentLocalTime);*/
                 builder = new AlertDialog.Builder(this.ctx);
                 builder.setTitle("Alert!");
-                builder.setMessage("Are you Sure?\n\n Have you taken class for this subject");
-                builder.setPositiveButton("PROCEED", new DialogInterface.OnClickListener() {
+                builder.setMessage("Are you Sure?\nHave you taken class for this subject?");
+                builder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(ctx, fingerprint.class);
+                        /*Intent intent = new Intent(ctx, fingerprint.class);
                         emp_id = teacherListItems.getHead();
                         ctx.startActivity(intent);
                         ((Activity) ctx).finish();
-
+*/
                     }
                 });
-                builder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("no", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        ((Activity) ctx).finish();
-                        ctx.startActivity(new Intent(ctx, StudentArea.class));
+
                     }
                 });
                 AlertDialog alertDialog = builder.create();
