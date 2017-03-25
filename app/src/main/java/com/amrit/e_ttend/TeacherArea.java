@@ -46,13 +46,12 @@ public class TeacherArea extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View header=navigationView.getHeaderView(0);
+        displayselectedscreen(R.id.teacherarea);
+
         name=(TextView)header.findViewById(R.id.Name);
         email=(TextView)header.findViewById(R.id.Email);
         name.setText(SharedPrefManager.getInstance(this).getteachername());
         email.setText(SharedPrefManager.getInstance(this).getteacheremail());
-
-        displayselectedscreen(R.id.teacherarea);
-
 
     }
 
@@ -63,8 +62,10 @@ public class TeacherArea extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             finish();
+            moveTaskToBack(true);
             super.onBackPressed();
         }
+
     }
 
    /* @Override
@@ -102,6 +103,12 @@ public class TeacherArea extends AppCompatActivity
                 break;
             case R.id.logout:
                 fragment=new TeacherLogout();
+                break;
+            case R.id.session:
+                fragment=new TeacherSessionUpdate1();
+                break;
+            case R.id.attendance:
+                fragment=new TeacherAttendanceUpdate1();
                 break;
             case R.id.teacherarea:
                 fragment=new TeacherSubjectsFrag();

@@ -65,7 +65,7 @@ public class QRscanner extends AppCompatActivity {
             }
             else
             {
-                final String usn= StudentArea.susn;
+                final String usn= SharedPrefManager.getInstance(this).getstudentusn();
                 final String ssub_name=StudentAdpater.ssub_name;
                 final String qrcode=result.getContents();
                 Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+5:30"));
@@ -135,7 +135,7 @@ public class QRscanner extends AppCompatActivity {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                finish();
+                startActivity(new Intent(getApplicationContext(),StudentArea.class));
             }
         });
         AlertDialog alertDialog=builder.create();

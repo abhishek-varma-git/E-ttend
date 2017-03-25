@@ -35,9 +35,8 @@ public class TeacherSubjectsFrag extends Fragment {
     RecyclerView.Adapter adapter;
     RecyclerView.LayoutManager layout;
     ArrayList<TeacherListItems> arrayList = new ArrayList<>();
+    String emp_id;static int count;
     String url_data = "http://irretrievable-meter.000webhostapp.com/teacherretrieve.php";
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -46,6 +45,7 @@ public class TeacherSubjectsFrag extends Fragment {
         layout = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layout);
         recyclerView.setHasFixedSize(true);
+        emp_id=SharedPrefManager.getInstance(getActivity()).getteacherempid();
         if(!SharedPrefManager.getInstance(getActivity()).isTeacherLoggedIn())
         {
             getActivity().finish();
@@ -60,12 +60,14 @@ public class TeacherSubjectsFrag extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         progressDialog.dismiss();
-                        Contents.timearray=new long[response.length()];
-                        for (int count = 0; count < response.length(); count++) {
+                        Contents.teachersubjects=new String[response.length()];
+                        Contents.classid=new String[response.length()];
+                        for (count = 0; count < response.length(); count++) {
                             try {
-
                                 JSONArray JsonArray = new JSONArray(response);
                                 JSONObject jsonobject = JsonArray.getJSONObject(count);
+                                Contents.teachersubjects[count]=jsonobject.getString("sub_name");
+                                Contents.classid[count]=jsonobject.getString("class_id");
                                 TeacherListItems item = new TeacherListItems(
                                         jsonobject.getString("sub_name"),
                                         jsonobject.getString("class_id"),
@@ -87,19 +89,18 @@ public class TeacherSubjectsFrag extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
                 Toast.makeText(getActivity(), "Error! Check for your Internet Connection" +
-                        "        Unable to fetch data from Server", Toast.LENGTH_LONG).show();
+                        "        Unable to fetch data from Server", Toast.LENGTH_SHORT).show();
                 error.printStackTrace();
             }
         }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params=new HashMap<String, String>();
-                params.put("emp_id",Contents.empid);
+                params.put("emp_id",emp_id);
                 return params;
             }
         };
         MySingleton.getInstance(getActivity()).addToRequestque(stringRequest);
-
         return view;
     }
 

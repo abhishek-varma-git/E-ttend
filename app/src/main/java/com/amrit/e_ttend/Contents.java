@@ -13,4 +13,6 @@ public class Contents {
     public static String usn;
     public static String empid;
     public static long[] timearray;
+    public static String[] teachersubjects;
+    public static String[] classid;
 }

@@ -16,6 +16,19 @@
         android:icon="@drawable/info"
         android:title="About" />
 
+        <item android:title="Manual Database update">
+            <menu>
+                <item
+                    android:id="@+id/session"
+                    android:icon="@drawable/logout"
+                    android:title="Session Update" />
+                <item
+                    android:id="@+id/attendance"
+                    android:icon="@drawable/logout"
+                    android:title="Attendance Update" />
+
+            </menu>
+        </item>
 
 
     </group>

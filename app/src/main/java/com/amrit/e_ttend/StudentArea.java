@@ -62,6 +62,7 @@ public class StudentArea extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+            moveTaskToBack(true);
             finish();
             super.onBackPressed();
         }

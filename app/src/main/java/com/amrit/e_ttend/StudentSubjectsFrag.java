@@ -37,13 +37,12 @@ public class StudentSubjectsFrag extends Fragment{
     RecyclerView.Adapter adapter;
     RecyclerView.LayoutManager layout;
     ArrayList<StudentListItem> arrayList = new ArrayList<>();
-    String url_data = "http://irretrievable-meter.000webhostapp.com/retrivestudent.php";
-    TextView name,email;
+    String url_data = "https://irretrievable-meter.000webhostapp.com/retrivestudent.php";
     public static String susn;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view =inflater.inflate(R.layout.teachersubjectsfrag,container,false);
+        View view =inflater.inflate(R.layout.studentsubjectsfrag,container,false);
         if(!SharedPrefManager.getInstance(getActivity()).isStudentLoggedIn())
         {
             getActivity().finish();
@@ -98,7 +97,7 @@ public class StudentSubjectsFrag extends Fragment{
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
                 Toast.makeText(getActivity(), "Error! Check for your Internet Connection" +
-                        "        Unable to fetch data from Server", Toast.LENGTH_LONG).show();
+                        "        Unable to fetch data from Server", Toast.LENGTH_SHORT).show();
                 error.printStackTrace();
             }
         }){
