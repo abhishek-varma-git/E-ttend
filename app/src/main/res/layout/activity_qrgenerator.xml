@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/QR_Generator"
     android:layout_height="match_parent"
     tools:context="com.amrit.e_ttend.QRGenerator">
     <ImageView
@@ -39,23 +40,6 @@
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintVertical_bias="0.87" />
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="151dp"
-        android:layout_height="56dp"
-        android:text="Button"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/generate"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.935" />
 
 </android.support.constraint.ConstraintLayout>

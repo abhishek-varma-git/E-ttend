@@ -111,6 +111,7 @@ public class TeacherAdapter extends RecyclerView.Adapter<TeacherAdapter.ViewHold
                         final ProgressDialog progressDialog = new ProgressDialog(ctx);
                         progressDialog.setMessage("Updating...");
                         progressDialog.show();
+                        progressDialog.setCancelable(false);
                         StringRequest stringRequest = new StringRequest(Request.Method.POST, url_data,
                                 new Response.Listener<String>() {
                                     @Override

@@ -50,7 +50,7 @@ public class QRGenerator extends Fragment {
                 MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
                 try {
 
-                    int a = 1 + (int)(Math.random() * 999999999);
+                    final int a = 1 + (int)(Math.random() * 999999999);
                     final String value= Integer.toString(a);
                     BitMatrix bitMatrix = multiFormatWriter.encode(value, BarcodeFormat.QR_CODE, 200, 200);
                     BarcodeEncoder barcodeEncoder=new BarcodeEncoder();
@@ -59,6 +59,7 @@ public class QRGenerator extends Fragment {
                 final ProgressDialog progressDialog = new ProgressDialog(getActivity());
                 progressDialog.setMessage("Updating...");
                 progressDialog.show();
+                    progressDialog.setCancelable(false);
                 StringRequest stringRequest=new StringRequest(Request.Method.POST,url_data,
                         new Response.Listener<String>() {
                             @Override
@@ -67,6 +68,17 @@ public class QRGenerator extends Fragment {
                                     try {
                                         image.setImageBitmap(bitmap);
                                         //Toast.makeText(getActivity(),value,Toast.LENGTH_SHORT).show();
+                                        image.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                //Toast.makeText(getActivity(),"clicked",Toast.LENGTH_SHORT).show();
+                                                FullImage fragment=new FullImage();
+                                                Bundle args = new Bundle();
+                                                args.putInt("image",a);
+                                                fragment.setArguments(args);
+                                                getFragmentManager().beginTransaction().replace(R.id.QR_Generator, fragment).commit();
+                                            }
+                                        });
                                         JSONArray JsonArray = new JSONArray(response);
                                         JSONObject jsonobject = JsonArray.getJSONObject(0);
                                         String code=jsonobject.getString("code");

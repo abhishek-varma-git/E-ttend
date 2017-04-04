@@ -55,6 +55,7 @@ public class TeacherSubjectsFrag extends Fragment {
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Fetching Subject...");
         progressDialog.show();
+        progressDialog.setCancelable(false);
         StringRequest stringRequest=new StringRequest(Request.Method.POST,url_data,
                 new Response.Listener<String>() {
                     @Override
