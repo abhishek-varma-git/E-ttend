@@ -10,6 +10,7 @@
 
         <item
             android:id="@+id/QR_Generator"
+            android:icon="@drawable/qr"
             android:title="QR Generator" />
         <item
         android:id="@+id/About"
@@ -20,11 +21,11 @@
             <menu>
                 <item
                     android:id="@+id/session"
-                    android:icon="@drawable/logout"
+                    android:icon="@drawable/session"
                     android:title="Session Update" />
                 <item
                     android:id="@+id/attendance"
-                    android:icon="@drawable/logout"
+                    android:icon="@drawable/attendance"
                     android:title="Attendance Update" />
 
             </menu>

@@ -19,6 +19,7 @@ public class SharedPrefManager {
     private static String keyempid="sdfdfsfsdf";
     private static String keytname="dfsdfsf";
     private static String keytemail="Sfsdfsffdsf";
+    private static String keyqr="sfsdfwerwersdf";
     private SharedPrefManager(Context context)
     {
         mctx=context;
@@ -52,6 +53,15 @@ public class SharedPrefManager {
         editor.putString(keyempid,empid);
         editor.putString(keytname,name);
         editor.putString(keytemail,email);
+        editor.apply();
+        return true;
+    }
+    public boolean qr(String qr)
+    {
+
+        SharedPreferences sharedPreferences=mctx.getSharedPreferences(shared_pref_name,Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.putString(keyqr,qr);
         editor.apply();
         return true;
     }
@@ -108,6 +118,11 @@ public class SharedPrefManager {
     {
         SharedPreferences sharedPreferences=mctx.getSharedPreferences(shared_pref_name,Context.MODE_PRIVATE);
         return sharedPreferences.getString(keyempid,null);
+    }
+    public String getqr()
+    {
+        SharedPreferences sharedPreferences=mctx.getSharedPreferences(shared_pref_name,Context.MODE_PRIVATE);
+        return sharedPreferences.getString(keyqr,null);
     }
     public String getteachername()
     {

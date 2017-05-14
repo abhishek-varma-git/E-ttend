@@ -9,8 +9,8 @@
 
     <EditText
         android:id="@+id/usn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="265dp"
+        android:layout_height="43dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
@@ -19,13 +19,16 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Enter USN "
+        android:textAlignment="center"
+        android:background="@drawable/edittext"
         android:inputType="textPersonName"
+        android:textColorHint="@color/blue"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.216" />
+        app:layout_constraintVertical_bias="0.094" />
 
     <TextView
         android:id="@+id/subjectspinner"
@@ -33,6 +36,7 @@
         android:layout_height="26dp"
         android:text="Select Subjects"
         android:textSize="18dp"
+        android:textColor="#000000"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -41,8 +45,8 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.392"
-        app:layout_constraintVertical_bias="0.321"
+        app:layout_constraintHorizontal_bias="0.657"
+        app:layout_constraintVertical_bias="0.224"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp" />
 
@@ -59,7 +63,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.392" />
+        app:layout_constraintVertical_bias="0.305"
+        app:layout_constraintHorizontal_bias="0.854" />
 
     <Button
         android:id="@+id/nextbutton"
@@ -70,9 +75,11 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:text="ok"
+        android:background="@drawable/buttonshape"
+        android:textColor="@color/blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
+        app:layout_constraintVertical_bias="0.447" />
 </android.support.constraint.ConstraintLayout>

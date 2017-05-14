@@ -1,12 +1,21 @@
 package com.amrit.e_ttend;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.renderscript.Sampler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import android.os.Bundle;
+import android.support.v4.app.ShareCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -29,91 +38,141 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 
 public class QRGenerator extends Fragment {
-    Button generate;ImageView image;
-    static String url_data="http://irretrievable-meter.000webhostapp.com/qru.php";
+    Button generate;
+    ImageView image;
+    String ImagePath,value;
+    Bitmap bitmap;
+    Uri URI;
+    static String url_data = "http://irretrievable-meter.000webhostapp.com/qru.php";
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view =inflater.inflate(R.layout.activity_qrgenerator,container,false);
-        generate=(Button)view.findViewById(R.id.generate);
-        image=(ImageView)view.findViewById(R.id.image);
-        final String emp_id=SharedPrefManager.getInstance(getActivity()).getteacherempid();
+        View view = inflater.inflate(R.layout.activity_qrgenerator, container, false);
+        generate = (Button) view.findViewById(R.id.generate);
+        image = (ImageView) view.findViewById(R.id.image);
+        final String emp_id = SharedPrefManager.getInstance(getActivity()).getteacherempid();
+        final String qr = SharedPrefManager.getInstance(getActivity()).getqr();
+        if (qr != null) {
+            MultiFormatWriter multiFormatWriter2 = new MultiFormatWriter();
+            try {
+                BitMatrix bitMatrix2 = multiFormatWriter2.encode(qr, BarcodeFormat.QR_CODE, 200, 200);
+                BarcodeEncoder barcodeEncoder2 = new BarcodeEncoder();
+                final Bitmap bitmap2 = barcodeEncoder2.createBitmap(bitMatrix2);
+                image.setImageBitmap(bitmap2);
+            } catch (WriterException e) {
+                e.printStackTrace();
+            }
+        }
+
         generate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
                 try {
 
-                    final int a = 1 + (int)(Math.random() * 999999999);
-                    final String value= Integer.toString(a);
+                    final int a = 1 + (int) (Math.random() * 999999999);
+                    value = Integer.toString(a);
                     BitMatrix bitMatrix = multiFormatWriter.encode(value, BarcodeFormat.QR_CODE, 200, 200);
-                    BarcodeEncoder barcodeEncoder=new BarcodeEncoder();
-                    final Bitmap bitmap=barcodeEncoder.createBitmap(bitMatrix);
+                    BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+                    bitmap = barcodeEncoder.createBitmap(bitMatrix);
 
-                final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-                progressDialog.setMessage("Updating...");
-                progressDialog.show();
+                    final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+                    progressDialog.setMessage("Updating...");
+                    progressDialog.show();
                     progressDialog.setCancelable(false);
-                StringRequest stringRequest=new StringRequest(Request.Method.POST,url_data,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                progressDialog.dismiss();
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url_data,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    progressDialog.dismiss();
                                     try {
+
+                                        SharedPrefManager.getInstance(getActivity())
+                                                .qr(Integer.toString(a));
                                         image.setImageBitmap(bitmap);
+                                       //save to gallery
+                                        image.setDrawingCacheEnabled(true);
+                                        Bitmap bitmap = image.getDrawingCache();
+                                        String root = Environment.getExternalStorageDirectory().toString();
+                                        File newDir = new File(root + "/ettend");
+                                        newDir.mkdirs();
+                                        Random gen = new Random();
+                                        int n = 10000;
+                                        n = gen.nextInt(n);
+                                        String fotoname = "Photo-"+ n +".jpg";
+                                        File file = new File (newDir, fotoname);
+                                        if (file.exists ()) file.delete ();
+                                        try {
+                                            FileOutputStream out = new FileOutputStream(file);
+                                            Toast.makeText(getActivity(), "test", Toast.LENGTH_SHORT ).show();
+                                            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                                            out.flush();
+                                            out.close();
+                                            Toast.makeText(getActivity(), "Saved to your folder", Toast.LENGTH_SHORT ).show();
+
+                                        } catch (Exception e) {
+
+                                        }
+
                                         //Toast.makeText(getActivity(),value,Toast.LENGTH_SHORT).show();
                                         image.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
                                                 //Toast.makeText(getActivity(),"clicked",Toast.LENGTH_SHORT).show();
-                                                FullImage fragment=new FullImage();
+                                                FullImage fragment = new FullImage();
                                                 Bundle args = new Bundle();
-                                                args.putInt("image",a);
+                                                args.putInt("image", a);
                                                 fragment.setArguments(args);
-                                                getFragmentManager().beginTransaction().replace(R.id.QR_Generator, fragment).commit();
+                                                getFragmentManager().beginTransaction().add(R.id.QR_Generator, fragment).commit();
                                             }
                                         });
                                         JSONArray JsonArray = new JSONArray(response);
                                         JSONObject jsonobject = JsonArray.getJSONObject(0);
-                                        String code=jsonobject.getString("code");
-                                        if(code=="success")
-                                        {
-                                            Toast.makeText(getActivity(),jsonobject.getString("message"),Toast.LENGTH_SHORT).show();
-                                        }
-                                        else
-                                        {
-                                            Toast.makeText(getActivity(),jsonobject.getString("message"),Toast.LENGTH_SHORT).show();
+                                        String code = jsonobject.getString("code");
+                                        if (code == "success") {
+                                            Toast.makeText(getActivity(), jsonobject.getString("message"), Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(getActivity(), jsonobject.getString("message"), Toast.LENGTH_SHORT).show();
                                         }
 
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        progressDialog.dismiss();
-                        Toast.makeText(getActivity(), "Error! Check for your Internet Connection" +
-                                "        Unable to fetch data from Server", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(getActivity(),value,Toast.LENGTH_SHORT).show();
-                        error.printStackTrace();
-                    }
-                }){
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> params=new HashMap<String, String>();
-                        params.put("emp_id",emp_id);
-                        params.put("qr_code",value);
-                        return params;
-                    }
-                };
-                MySingleton.getInstance(getActivity()).addToRequestque(stringRequest);
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            progressDialog.dismiss();
+                            Toast.makeText(getActivity(), "Error! Check for your Internet Connection" +
+                                    "        Unable to fetch data from Server", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), value, Toast.LENGTH_SHORT).show();
+                            error.printStackTrace();
+                        }
+                    }) {
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<String, String>();
+                            params.put("emp_id", emp_id);
+                            params.put("qr_code", value);
+                            return params;
+                        }
+                    };
+                    MySingleton.getInstance(getActivity()).addToRequestque(stringRequest);
 
                 } catch (WriterException e) {
                     e.printStackTrace();
@@ -123,5 +182,4 @@ public class QRGenerator extends Fragment {
 
         return view;
     }
-
 }
