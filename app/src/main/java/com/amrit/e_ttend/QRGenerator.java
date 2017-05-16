@@ -3,6 +3,7 @@ package com.amrit.e_ttend;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.media.MediaScannerConnection;
@@ -44,6 +45,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -106,29 +108,7 @@ public class QRGenerator extends Fragment {
                                                 .qr(Integer.toString(a));
                                         image.setImageBitmap(bitmap);
                                        //save to gallery
-                                        image.setDrawingCacheEnabled(true);
-                                        Bitmap bitmap = image.getDrawingCache();
-                                        String root = Environment.getExternalStorageDirectory().toString();
-                                        File newDir = new File(root + "/ettend");
-                                        newDir.mkdirs();
-                                        Random gen = new Random();
-                                        int n = 10000;
-                                        n = gen.nextInt(n);
-                                        String fotoname = "Photo-"+ n +".jpg";
-                                        File file = new File (newDir, fotoname);
-                                        if (file.exists ()) file.delete ();
-                                        try {
-                                            FileOutputStream out = new FileOutputStream(file);
-                                            Toast.makeText(getActivity(), "test", Toast.LENGTH_SHORT ).show();
-                                            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
-                                            out.flush();
-                                            out.close();
-                                            Toast.makeText(getActivity(), "Saved to your folder", Toast.LENGTH_SHORT ).show();
-
-                                        } catch (Exception e) {
-
-                                        }
-
+                                        savePicture(bitmap,value);
                                         //Toast.makeText(getActivity(),value,Toast.LENGTH_SHORT).show();
                                         image.setOnClickListener(new View.OnClickListener() {
                                             @Override
@@ -160,7 +140,6 @@ public class QRGenerator extends Fragment {
                             progressDialog.dismiss();
                             Toast.makeText(getActivity(), "Error! Check for your Internet Connection" +
                                     "        Unable to fetch data from Server", Toast.LENGTH_SHORT).show();
-                            Toast.makeText(getActivity(), value, Toast.LENGTH_SHORT).show();
                             error.printStackTrace();
                         }
                     }) {
@@ -181,5 +160,25 @@ public class QRGenerator extends Fragment {
         });
 
         return view;
+    }
+    private void savePicture(Bitmap bm, String imgName)
+    {
+        OutputStream fOut = null;
+        String strDirectory = Environment.getExternalStorageDirectory().toString();
+
+        File f = new File(strDirectory, imgName);
+        try {
+            fOut = new FileOutputStream(f);
+            Toast.makeText(getActivity(), "test", Toast.LENGTH_SHORT).show();
+            /**Compress image**/
+            bm.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
+            fOut.flush();
+            fOut.close();
+            /**Update image to gallery**/
+            MediaStore.Images.Media.insertImage(getActivity().getContentResolver(),
+                    f.getAbsolutePath(), f.getName(), f.getName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
